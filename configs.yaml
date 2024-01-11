@@ -130,19 +130,50 @@ crafter:
   imag_gradient: 'reinforce'
 
 atari100k:
+  #specify task flag
+  task: 'PongNoFrameskip-v4'
+  # The number of environment steps to run during training. This is the total number of raw
+  # environment frames processed, including skipped frames when action_repeat > 1.
   steps: 4e5
+  # The number of parallel environments to run. Here, it's set to 1, meaning only a single
+  # environment is used, which can make learning more challenging due to less diverse data.
   envs: 1
+  # The number of times the same action is repeated in the environment. A higher number can
+  # make the problem easier by reducing the frequency of decisions the agent has to make.
   action_repeat: 4
+  # The ratio of environment steps to training steps. A train_ratio of 1024 means that for
+  # every 1024 environment steps collected, a batch of data will be sampled and a single
+  # training step will be performed.
   train_ratio: 1024
+  # A flag indicating whether or not to log prediction videos. If true, the agent's predictions
+  # of future states will be recorded as videos for visualization purposes.
   video_pred_log: true
+  # The number of episodes to evaluate the agent on. Here, the agent is evaluated on 100 episodes
+  # to get a more accurate estimate of its performance.
   eval_episode_num: 100
+  # The distribution from which the agent samples actions. 'onehot' likely refers to a discrete
+  # action space where actions are represented as one-hot vectors.
   actor: {dist: 'onehot'}
+  # The gradient update rule for the imagination-augmented agents. 'reinforce' suggests that
+  # the REINFORCE algorithm is used for policy gradients.
   imag_gradient: 'reinforce'
+  # A flag indicating whether or not to use sticky actions. Sticky actions can introduce
+  # stochasticity in the environment by sometimes repeating the previous action.
   stickey: False
+  # Indicates how lives are used in the environment. 'unused' suggests that life loss is not
+  # considered a terminal state and the agent continues playing until the game truly ends.
   lives: unused
+  # The maximum number of no-op actions to perform at the start of an episode. This can be used
+  # to randomize the starting state of the game to increase diversity in the training data.
   noops: 30
+  # The method used to resize the game frames. 'opencv' indicates that the OpenCV library is used
+  # for image resizing operations.
   resize: opencv
+  # Indicates that a list of actions is needed, possibly to restrict the agent to a subset of
+  # available actions in the environment.
   actions: needed
+  # The maximum amount of time (in frames) an episode is allowed to run. This can be used to
+  # enforce a time limit on episodes for environments that don't have a natural end state.
   time_limit: 108000
 
 minecraft:
